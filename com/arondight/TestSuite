@@ -1,0 +1,12 @@
+package com.arondight
+
+public class TestSuite {
+    String name
+    long time
+    int failures
+    List testCases = []
+
+    public TestSuite(name) {
+        this.name = name
+    }
+}
