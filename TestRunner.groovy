@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2018-2019 Arondight, Inc. and Scott Fauerbach
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,7 +14,29 @@
  * limitations under the License.
  */
 
-import com.arondight.*
+class TestCase {
+    String name
+    String classname
+    long time
+    String errorMessage
+    String failureMessage
+    String efType
+}
+
+class TestSuite {
+    String name
+    long time
+    int failures
+    List testCases = []
+}
+
+def newTestCase(name, classname) {
+    new TestCase(name: name, classname: classname)
+}
+
+def newTestSuite(name) {
+    new TestSuite(name: name)
+}
 
 def hr() {
     '----------------------------------------------------------------------------------------------------'
@@ -100,7 +122,7 @@ def call(unitTestsDirectory){
 
             // begin test suite
             println "\n${hr()}\nTESTING SUITE $suitename\n${hr()}\n"
-            TestSuite suite = new TestSuite("var.${suitename}")
+            TestSuite suite = newTestSuite("var.${suitename}")
             testSuiteList.add(suite)
 
             // load the script and get the tests
@@ -109,7 +131,7 @@ def call(unitTestsDirectory){
 
             // each test in the map
             testsMap.each { testName, testClosure ->
-                TestCase tc = new TestCase(testName, "var.${suite.name}")
+                TestCase tc = newTestCase(testName, "var.${suite.name}")
                 suite.testCases.add(tc)
                 long start = new Date().getTime()
                 try {
@@ -153,3 +175,5 @@ def call(unitTestsDirectory){
 
     println "${allResults}\n"
 }
+
+return this
