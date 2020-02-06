@@ -105,7 +105,7 @@ def fullString(TestSuite suite, boolean xml = false) {
     }
 }
 
-def call(unitTestsDirectory){
+def runTests(unitTestsDirectory){
     // track the test suites
     def testSuiteList = []
 
