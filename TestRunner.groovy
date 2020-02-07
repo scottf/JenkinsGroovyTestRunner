@@ -105,7 +105,7 @@ def fullString(TestSuite suite, boolean xml = false) {
     }
 }
 
-def runTests(unitTestsDirectory = "test") {
+def runTests(unitTestsDirectory = "test"){
     // track the test suites
     def testSuiteList = []
 
@@ -122,7 +122,7 @@ def runTests(unitTestsDirectory = "test") {
 
             // begin test suite
             println "\n${hr()}\nTESTING SUITE $suitename\n${hr()}\n"
-            TestSuite suite = newTestSuite("var.${suitename}")
+            TestSuite suite = newTestSuite(suitename)
             testSuiteList.add(suite)
 
             // load the script and get the tests
@@ -131,7 +131,7 @@ def runTests(unitTestsDirectory = "test") {
 
             // each test in the map
             testsMap.each { testName, testClosure ->
-                TestCase tc = newTestCase(testName, "var.${suite.name}")
+                TestCase tc = newTestCase(testName, suite.name)
                 suite.testCases.add(tc)
                 long start = new Date().getTime()
                 try {
