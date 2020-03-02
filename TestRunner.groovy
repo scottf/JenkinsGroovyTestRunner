@@ -105,7 +105,15 @@ def fullString(TestSuite suite, boolean xml = false) {
     }
 }
 
-def runTests(unitTestsDirectory = "test"){
+def _shouldTest(filename, filter) {
+    filename.endsWith("Test.groovy") && filename.contains(filter)
+}
+
+def runTests(configMap = [:]) {
+    
+    def filter             = configMap.filter == null ? "" : configMap.filter
+    def unitTestsDirectory = configMap.unitTestsDirectory == null ? "test" : configMap.unitTestsDirectory
+
     // track the test suites
     def testSuiteList = []
 
@@ -116,7 +124,7 @@ def runTests(unitTestsDirectory = "test"){
     // for each file that ends with Test.groovy, it should have a method called getTests
     // that returns a map of test names to closures
     filenames.each { filename ->
-        if (filename.endsWith("Test.groovy")) {
+        if (_shouldTest(filename, filter)) {
             // calculate suitename from filename
             def suitename = filename.substring(0, filename.length() - 11)
 
